@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
+import { addContact } from "../../redux/contactsOps";
 import css from "./ContactForm.module.css";
 import * as Yup from "yup";
 import { useId } from "react";
@@ -11,7 +11,7 @@ const UserSchema = Yup.object().shape({
     .required("Це поле обовʼязкове для заповнення!"),
   number: Yup.string()
     .matches(
-      /^\d{3}-\d{2}-\d{2}$/,
+      /^\d{3}-\d{3}-\d{4}$/,
       "Введіть правильний формат номера телефону ххх-хх-хх!"
     )
     .required("Це поле обовʼязкове для заповнення!"),
@@ -28,7 +28,6 @@ export default function ContactForm() {
       onSubmit={(values, { resetForm }) => {
         dispatch(
           addContact({
-            id: Date.now().toString(),
             name: values.name,
             number: values.number,
           })
